@@ -1,0 +1,19 @@
+{
+  "name": "ezeyeye",
+  "version": "1.0.0",
+  "description": "This is a Fiverr client project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raj Kapadia",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "google-spreadsheet": "^3.0.11",
+    "nodemailer": "^6.4.10"
+  }
+}
