@@ -53,10 +53,16 @@ const nodemailer = require('nodemailer');
 const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    pool: true,
+    host: "mail.servicecaldera.com",
+    port: 587,
+    secure: false,
     auth: {
         user: EMAIL,
         pass: PASSWORD
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
@@ -108,8 +114,8 @@ webApp.post('/webhook', async (req, res) => {
         }
 
         // send mail
-        let mailOptions = {
-            from: "firstpositionweb", // sender address
+        let mailOptionsOne = {
+            from: "chatbot@servicecaldera.com", // sender address
             to: "firstpositionweb@gmail.com", // list of receivers
             subject: "Nueva Conversación Chat", // Subject line
             html: `<h2>CONTACTO DESDE COSMIC-CHATBOT</h2><br>
@@ -124,7 +130,30 @@ webApp.post('/webhook', async (req, res) => {
              <p> Otros comentarios: ${cualquiercosa}</p>`
         };
 
-        transporter.sendMail(mailOptions, function (err, info) {
+        transporter.sendMail(mailOptionsOne, function (err, info) {
+            if (err) {
+                console.log(`Error at sendMAil --> ${err}`);
+            }
+        });
+
+        // send mail
+        let mailOptionsTwo = {
+            from: "chatbot@servicecaldera.com", // sender address
+            to: correo, // list of receivers
+            subject: "Nueva Conversación Chat", // Subject line
+            html: `<h2>CONTACTO DESDE COSMIC-CHATBOT</h2><br>
+             <p> Nombre: ${nombre} </p><br>
+             <p> Email: ${correo}</p><br>
+ 		 	 <p> Telefono: ${telefono}</p><br>
+			 <p> Consulta: ${consulta}</p><br>
+            <p> Rubro: ${rubro}</p><br>
+            <p> Metros: ${metros}</p><br>
+            <p> ¿Que tipo de trabajos necesita hacer? ${tipoarreglos}</p><br>
+            <p> Lugar: ${lugar}</p><br>
+             <p> Otros comentarios: ${cualquiercosa}</p>`
+        };
+
+        transporter.sendMail(mailOptionsTwo, function (err, info) {
             if (err) {
                 console.log(`Error at sendMAil --> ${err}`);
             }
